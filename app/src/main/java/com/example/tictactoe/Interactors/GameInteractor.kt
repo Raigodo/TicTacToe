@@ -1,6 +1,5 @@
 package com.example.tictactoe.Interactors
 
-import android.util.Log
 import com.example.tictactoe.Entities.AIActor
 import com.example.tictactoe.Entities.BaseActor
 import com.example.tictactoe.Entities.PlayerActor
@@ -24,6 +23,7 @@ class GameInteractor(
         if (!isPositionsEmpty(x,y))
             return
         board[x][y] = value
+        updateBoard()
         actionsLeft--
         if (actionsLeft <= 0
             || checkForEndCombat() != 0){
@@ -34,7 +34,7 @@ class GameInteractor(
     }
 
     fun getEmptyPositions() : LinkedList<Pair<Int,Int>>{
-        var list = LinkedList<Pair<Int,Int>>()
+        val list = LinkedList<Pair<Int,Int>>()
         repeat(9){
             if (board[it/3][it%3] == 0)
                 list.add(Pair(it/3,it%3))
@@ -55,7 +55,6 @@ class GameInteractor(
             playerOneActor.OnTurnStarted(this)
         else
             playerTwoActor.OnTurnStarted(this)
-        updateBoard()
     }
 
     fun onGameStarted() {
